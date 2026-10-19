@@ -1,0 +1,37 @@
+﻿Fecha;Cuenta;numero de asiento;Debe(C$);Haber(C$);Concepto
+01/10/2026;1102-1-Banco;1;250.000;0;Aportaciones iniciales de los 5 socios fundadores (Claudia, Andrea, Angel, Duilio, y Oseyrin)
+01/10/2026;3301-1 - Capital Social;1;0;250.000;Aportaciones iniciales de los 5 socios fundadores (Claudia, Andrea, Angel, Duilio, y Oseyrin)
+02/10/2026;1104-2-Renta pagada por anticipado;2;25.000;0;Pago adelantado de alquiler de oficina
+02/10/2026;1102-1-Banco;2;0;25.000;Pago adelantado de alquiler de oficina
+03/10/2026;1201-1-Equipode computo y servidores;3;60.000;0;Compra de estaciones de trabajo y srvidores 
+03/10/2026;1102-1-Banco;3;0;30.000;Pago parcial de equipo de computo
+03/10/2026;2103-8-Proveedores;3;0;30.000;Saldo a credito por compra de servidores
+05/10/2026;2102-5-Equipo de transporte(Minivan);4;120.000;0;Adquisición de Minivan comercial para personal
+05/10/2026;1102-1-Banco;4;0;40.000;Enganche inicial Minivan
+05/10/2026;3201-1-Documentos por pagar a largo plazo;4;0;80.000;Financiamiento bancario Minivan
+07/10/2026;1202-1-Activos Intangibles(Licencias);5;15.000;0;Compras de licencias de software especializadas
+07/10/2026;1102-1-Banco;5;0;15.000;Compras de licencias de software especializadas
+10/10/2026;1101-3-Caja;6;40.000;0;Ventas de licencias de software al contado
+10/10/2026;4102-2-Ingresos por licencias y software;6;0;40.000;Ventas de licencias de software al contado
+12/10/2026;5201-1-Costo de servicios TI;7;12.000;0;Insumos de fibra optica y srvicios cloud
+12/10/2026;2103-8-Proveedores;7;0;12.000;Insumos de fibra optica y srvicios cloud
+14/10/2026;1103-1-Clientes;8;50.000;0;Desarrollo de plataforma web a credito
+14/10/2026;4102-2-Ingresos por licencias y software;8;0;50.000;Desarrollo de plataforma web a credito
+16/10/2026;1102-1-Banco;9;20.000;0;Deposito de efectivo de caja en banco
+16/10/2026;1101-3-Caja;9;0;20.000;Deposito de efectivo de caja en banco
+18/10/2026;1102-1-Banco;10;25.000;0;Anticipo recibido de cliente por consultoria
+18/10/2026;2201-1-Anticipo de clientes;10;0;25.000;Anticipo recibido de cliente por consultoria
+20/10/2026;5202-4-Gasto por sueldos y salarios;11;20.000;0;Pago de primera quincena nomina
+20/10/2026;1102-1-Banco;11;0;20.000;Pago de primera quincena nomina
+22/10/2026;1102-1-Banco;12;25.000;0;Cobro parcial a clientes por servicios a credito
+22/10/2026;1103-1-Clientes;12;0;25.000;Cobro parcial a clientes por servicios a credito
+25/10/2026;2103-8-Proveedores;13;15.000;0;Abono a cuenta de proveedores tecnologicos
+25/10/2026;1102-1-Banco;13;0;15.000;Abono a cuenta de proveedores tecnologicos
+28/10/2026;5203-5-Gastos por servicios;14;5.000;0;Pago de internet de alta velocidad y luz
+28/10/2026;1102-1-Banco;14;0;5.000;Pago de internet de alta velocidad y luz
+31/10/2026;5201-7-Gasto por renta;15;5.000;0;Reconocimiento de renta mensual consumida
+31/10/2026;1104-2-Renta pagada por anticipado;15;0;5.000;Reconocimiento de renta mensual consumida
+;;;;;
+;;;;;
+;;;;;
+;;;;;
