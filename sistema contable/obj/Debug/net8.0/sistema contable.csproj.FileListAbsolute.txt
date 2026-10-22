@@ -31,3 +31,20 @@ C:/Users/Laboratorio 2/Desktop/duilio progamacion contabilidad/Sistema_contable/
 /home/alejandro/Descargas/Sistema_contable/sistema contable/obj/Debug/net8.0/sistema contable.pdb
 /home/alejandro/Descargas/Sistema_contable/sistema contable/obj/Debug/net8.0/sistema contable.genruntimeconfig.cache
 /home/alejandro/Descargas/Sistema_contable/sistema contable/obj/Debug/net8.0/ref/sistema contable.dll
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/movimientos de las cuentas.csv
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/sistema contable
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/catalogo de cuentas.csv
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/sistema contable.deps.json
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/sistema contable.runtimeconfig.json
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/sistema contable.dll
+/home/alejandro/Escritorio/Cont-Program/sistema contable/bin/Debug/net8.0/sistema contable.pdb
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.GeneratedMSBuildEditorConfig.editorconfig
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.AssemblyInfoInputs.cache
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.AssemblyInfo.cs
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.csproj.CoreCompileInputs.cache
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.sourcelink.json
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.dll
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/refint/sistema contable.dll
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.pdb
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/sistema contable.genruntimeconfig.cache
+/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/Debug/net8.0/ref/sistema contable.dll

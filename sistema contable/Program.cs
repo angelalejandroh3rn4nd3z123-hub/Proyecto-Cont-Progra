@@ -81,7 +81,7 @@ while (continuar)
                 {
                     case 1: // logica del switch numero 1.1 mostrar el catalogo de las cuentas
                         Console.WriteLine();
-                        Console.WriteLine("CATÁLOGO DE LAS CUENTAS");
+                        Console.WriteLine("CATALOGO DE LAS CUENTAS");
                         Console.WriteLine();
 
                         //nos aseguramos otra vez que el archivo ese alli
@@ -98,10 +98,11 @@ while (continuar)
                         if (lineas_csv_del_catalogo1.Length == 0)
                         {
                             Console.WriteLine("El archivo se encuentra vacio");
+                            break;
                         }
 
                         // esto sirve para que el codigo se vea mas ordenado 
-                        Console.WriteLine($"{"Código",-6} | {"Cuenta",-35} | {"Tipo",-10}      |{"Naturaleza",-10}");
+                        Console.WriteLine($"{"Codigo",-6} | {"Cuenta",-35} | {"Tipo",-15} | {"Naturaleza",-18}");
                         Console.WriteLine(new string('-', 90));
 
                         //le damos el valor de verdadero a la nueva variable de tipo bool
@@ -113,9 +114,7 @@ while (continuar)
                             //no lee las lineas que se encuentren vacias es lo que hace el metodo IsNullOrWhiteSpace
                             if (string.IsNullOrWhiteSpace(lineas)) continue;
 
-                            // la primera linea del archivo csv son los encabezados los cuales no queremos leer de esta manera asi que usamos esta estructura condicional para 
-                            //señalar al programa que no la lea el metodo StartsWith sirve para definir si comienza con la condicion que le dimos que se salte esa linea por que encabezado lo leeremos despues
-                            if (primera_linea1_1 && lineas.ToLower().StartsWith("codigo"))
+                            if (primera_linea1_1 && es_encabezado(lineas))
                             {
                                 //le reasignamos un valor a primera lineas
                                 primera_linea1_1 = false;
@@ -128,8 +127,6 @@ while (continuar)
                             //esta condicion es para que lea la linea que cumple la condicion en funcion de las dimensiones del archivo 4 en este caso
                             if (datos.Length >= 4)
                             {
-                                //lo mismo que el metodo del punto 3 pero con la condicion del trim el cual elimina cualquier espacio que este al terminar de leer numeros o letras 
-                                //los cuales se van a almacenar en los arreglos correspondientes y las variables correspondientes
                                 string codgio = datos[0].Trim();
                                 string cuenta = datos[1].Trim();
                                 string tipo_de_cuenta = datos[2].Trim();
@@ -146,14 +143,14 @@ while (continuar)
                         }
                         break;
 
-                    case 2:// La lógica del 1.2 es agregar una cuenta al archivo csv
+                    case 2:// La logica del 1.2 es agregar una cuenta al archivo csv
                         Console.WriteLine();
                         Console.WriteLine("AGREGANDO UNA CUENTA NUEVA EN EL CATALOGO DE CUENTAS");
 
                         //nos aseguramos otra vez que el archivo ese alli
                         if (!File.Exists(ruta_del_catalogo_de_cuentas))
                         {
-                            Console.WriteLine("El archivo no se encuentra. Asegúrate de revisar la ruta y las propiedades.");
+                            Console.WriteLine("El archivo no se encuentra. Asegurate de revisar la ruta y las propiedades.");
                             break;
                         }
                         // pese hacer un numero lo que se le pide al usuario se inicializa como string para poder validar mejor la opcion
@@ -163,12 +160,7 @@ while (continuar)
                         // este bucle while existe para que el usuario no salga de la ejecucion hasta que ingrese un codigo de la cuenta que sea valido
                         while (true)
                         {
-                            
-                            //llamamos al metodo pedir numero para validar que no ingrese numeros no validos 
-                            int codigo_de_la_cuenta_introducido = pedir_numero();
-
-                            //y lo convertimos a string para que sea mas facil al momento de validar esta variable es la representacion del codigo que ingreso el usuario
-                            string codigo_str = codigo_de_la_cuenta_introducido.ToString();
+                            string codigo_str = pedir_codigo_texto();
 
                             // el metodo ReadAllLines sirve para que la pc lea el archivo csv y almacene todos los datos en el arreglo lineas_csv_del_catalogo
                             string[] lineas_existentes = File.ReadAllLines(ruta_del_catalogo_de_cuentas);
@@ -182,7 +174,6 @@ while (continuar)
                                 // esta funcion se salta las lineas que se encuentren en blanco
                                 if (string.IsNullOrWhiteSpace(linea)) continue;
 
-                                //el metodo ToSplit separa la lineas en funcion lo que le ingresemos al metodo en este caso ;
                                 string[] datos = linea.Split(';');
 
                                 // comparamos el codigo del csv con el ingresado el metodo To.Trim se salta los espacios en blanco
@@ -195,7 +186,7 @@ while (continuar)
                             //si el codigo ya existe se le indica al usuario que ya existe y se repite la accion de buscar
                             if (existe)
                             {
-                                Console.WriteLine($"El código {codigo_str} ya tiene una cuenta asignada. por favor ingresa otro codigo");
+                                Console.WriteLine($"El codigo {codigo_str} ya tiene una cuenta asignada. por favor ingresa otro codigo");
                             }
                             else
                             {
@@ -205,26 +196,24 @@ while (continuar)
                             }
                         }
                         // pedimos el nombre de la cuenta
-                        Console.Write("Ingresa el nombre de la cuenta ");
-                        //para validar que el nombre de la cuenta no sea repetido introducido por la persona no exista utilizaremos este metodo llamado pedir_nombre_cuenta
+                        Console.Write("Ingresa el nombre de la cuenta: ");
                         string cuenta_introducida = pedir_nombre_cuenta(ruta_del_catalogo_de_cuentas);
 
                         //inicializamos la varible tipo_de_cuenta_introducida  por medio de un switch le pedimos el tipo de cuenta que es de 1 a 6
                         string tipo_de_cuenta_introducida = "";
                         Console.WriteLine($"Indique el tipo para la cuenta '{cuenta_introducida}':");
-                        Console.WriteLine("1. Activa | 2. Pasiva | 3. Capital | 4. Gasto | 5. Costo | 6. Ingreso");
-                        // pedimoos la opcion por medio de un metodo
+                        Console.WriteLine("1. Activo | 2. Pasivo | 3. Patrimonio | 4. Gasto | 5. Costo | 6. Ingreso");
                         int opcion_1_1 = pedir_opcion1_1();
 
                         switch (opcion_1_1)
                         {
                             // y le asignamos un valor a tipo de cuenta en funcion a lo que ingreso el usuario
-                            case 1: tipo_de_cuenta_introducida = "activa"; break;
-                            case 2: tipo_de_cuenta_introducida = "pasiva"; break;
-                            case 3: tipo_de_cuenta_introducida = "capital"; break;
-                            case 4: tipo_de_cuenta_introducida = "gasto"; break;
-                            case 5: tipo_de_cuenta_introducida = "costo"; break;
-                            case 6: tipo_de_cuenta_introducida = "ingreso"; break;
+                            case 1: tipo_de_cuenta_introducida = "Activo"; break;
+                            case 2: tipo_de_cuenta_introducida = "Pasivo"; break;
+                            case 3: tipo_de_cuenta_introducida = "Patrimonio"; break;
+                            case 4: tipo_de_cuenta_introducida = "Gasto"; break;
+                            case 5: tipo_de_cuenta_introducida = "Costo"; break;
+                            case 6: tipo_de_cuenta_introducida = "Ingreso"; break;
                         }
 
                         //lo mismo de la de arriba pero ahora se pide la naturaleza
@@ -236,14 +225,14 @@ while (continuar)
                         //le asignamos una naturaleza en funcion de lo que indique el usuario
                         switch (opcion_1_1_4)
                         {
-                            case 1: naturaleza_de_la_cuenta_introducida = "acreedora"; break;
-                            case 2: naturaleza_de_la_cuenta_introducida = "deudora"; break;
+                            case 1: naturaleza_de_la_cuenta_introducida = "Acreedora"; break;
+                            case 2: naturaleza_de_la_cuenta_introducida = "Deudora"; break;
                         }
 
                         //ahora se guarda dentro del archivo csv 
                         string nuevaLinea = $"{codigo_validado};{cuenta_introducida};{tipo_de_cuenta_introducida};{naturaleza_de_la_cuenta_introducida}";
 
-                        //metodo File.AppendAllText() abre el archivo (Environment.NewLine) ingresa un salto de linea dentro del csv y guarda los cambios automáticamente.
+                        //metodo File.AppendAllText() abre el archivo (Environment.NewLine) ingresa un salto de linea dentro del csv y guarda los cambios automaticamente.
                         File.AppendAllText(ruta_del_catalogo_de_cuentas, Environment.NewLine + nuevaLinea);
 
                         Console.WriteLine($"Exito la cuenta '{cuenta_introducida}' ({codigo_validado}) se guardo correctamente dentro del catalogo");
@@ -251,7 +240,7 @@ while (continuar)
 
                     case 3:
                         //logica del programa para elimnar una cuenta del archivo csv
-                        Console.WriteLine("ELIMINACIÓN DE UNA CUENTA DEL CATÁLOGO");
+                        Console.WriteLine("ELIMINACION DE UNA CUENTA DEL CATALOGO");
                         //verificamos que el catalogo exista dentro del code
                         if (!File.Exists(ruta_del_catalogo_de_cuentas))
                         {
@@ -260,61 +249,50 @@ while (continuar)
                         }
 
                         //eliminamos la cuenta en base el codigo es mas facil que por el nombre 
-                        Console.Write("Ingrese el código de la cuenta a eliminar: ");
-                        int codigo_eliminar = pedir_numero();
+                        Console.Write("Ingrese el codigo de la cuenta a eliminar: ");
+                        string codigo_buscar = pedir_codigo_texto();
 
-                        //y lo convertimos a string por ser mas facil de leer
-                        string codigo_buscar = codigo_eliminar.ToString();
+                        if (cuenta_tiene_movimientos(ruta_de_los_movimientos_contables, codigo_buscar))
+                        {
+                            Console.WriteLine("No se puede eliminar la cuenta porque ya tiene movimientos registrados");
+                            break;
+                        }
 
                         string[] lineas1_3 = File.ReadAllLines(ruta_del_catalogo_de_cuentas);
 
-                        //usamos las listas como nos enseño el profe 
                         List<string> nuevas_lineas = new List<string>();
-
-                        // le damos la a la variable de tipo bool false para que nos ayude a detectar si podemos eliminar la cuenta
                         bool encontrada = false;
 
                         foreach (string linea in lineas1_3)
                         {
-                            //se salta los espacios en blanco este metodo
                             if (string.IsNullOrWhiteSpace(linea))
                                 continue;
 
-                            //el metodo ToSplit separa la lineas en funcion lo que le ingresemos al metodo en este caso ;
                             string[] datos = linea.Split(';');
 
-                            //lo que pasa aqui es que la primera linea del csv son los encabezados solo se leeran una vez pero despues seran ignorados
-                            if (datos[0].Trim().ToLower() == "Codigo")
+                            if (es_encabezado(linea))
                             {
                                 nuevas_lineas.Add(linea);
                                 continue;
                             }
 
-                            //nos aseguramos que la linea tenga las columnas necesarias despues vemos que el codigo de la cuenta este dentro del csv que tenemos
                             if (datos.Length > 0 && datos[0].Trim().ToLower() == codigo_buscar.ToLower())
                             {
-                                //si el codigo de la cuenta existe dentro del catalogo le cambiamos la datos a la variable encontrada
                                 encontrada = true;
-
-                                // mostramos que si la cuenta fue encontrada sera eliminada 
-                                Console.WriteLine($"La cuenta '{datos[1]}' sera eliminada");
+                                Console.WriteLine($"La cuenta '{(datos.Length > 1 ? datos[1] : "")}' sera eliminada");
                                 continue;
                             }
 
-                            //y se salta la linea de que contiene la cuenta que se quiere eliminar
                             nuevas_lineas.Add(linea);
                         }
 
-                        //si la cuenta no se encuentra se manda a mostrar este if
                         if (!encontrada)
                         {
-                            Console.WriteLine("No se encontro la cuenta con ese código");
+                            Console.WriteLine("No se encontro la cuenta con ese codigo");
                             break;
                         }
 
                         File.WriteAllLines(ruta_del_catalogo_de_cuentas, nuevas_lineas);
-
-                        //si todo fue correcto se manda el mensaje de confirmacion
                         Console.WriteLine("Cuenta eliminada correctamente.");
                         break;
 
@@ -328,54 +306,38 @@ while (continuar)
 
         case 2: // logica del punto numero 2 registrar movimiento contable 
             Console.WriteLine("REGISTRAR MOVIMIENTO CONTABLE");
-            //evaluamos que el archivo este alli
             if (!File.Exists(ruta_de_los_movimientos_contables))
             {
                 Console.WriteLine("No se encontro del archivo csv con los movimientos contable");
+                break;
             }
-            //para comenzar con el registro le pedimos al usuario que ingrese la fecha en formato yyyy-mm-dd
-            Console.WriteLine("Ingresa la fecha del asiento de la siguiente manera (yyyy-mm-dd)");
-            //llamando al metodo pedir_fecha validamos esta
+            Console.WriteLine("Ingresa la fecha del asiento de la siguiente manera (dd/MM/yyyy)");
             string fecha_del_movimiento = pedir_fecha();
-            //mediante las List vamos a leer todo 
+            int numero_de_asiento_nuevo = obtener_siguiente_asiento(ruta_de_los_movimientos_contables);
             List<string> lineas_temporales_movimiento = new List<string>();
-            //inicializamos las variables encargadas de la futura evaluaion del debe y el haber
-            double suma_debe = 0;
-            double suma_haber = 0;
+            decimal suma_debe = 0;
+            decimal suma_haber = 0;
             string cuenta_formateada_para_csv = "";
-            //bandera para repetir hasta que todo sea valido
             bool agregando_cuentas = true;
             while (agregando_cuentas)
             {
                 while (true)
                 {
-                    Console.WriteLine("Ingresa el código de la cuenta afectada");
-                    //pedimos el codigo y lo validamos por medio de pedir nuumero
+                    Console.WriteLine("Ingresa el codigo de la cuenta afectada");
                     string codigo_ingresado = pedir_codigo_texto();
-                    //y le reasignamos al valor de codigo_Str
                     string codigo_str = codigo_ingresado.ToString();
-                    //leemos todo el catalogo de los movimientos usando la funcion de File.ReadAllLines y le asignamos los valores al array lineas_catalogo
                     string[] lineas_catalogo = File.ReadAllLines(ruta_del_catalogo_de_cuentas);
                     bool cuenta_encontrada = false;
-                    //recorremos lo leido por medio del foreach
                     foreach (string linea_cat in lineas_catalogo)
                     {
-                        //nos aseguramos que la linea no se encuentre vacia
                         if (string.IsNullOrWhiteSpace(linea_cat)) continue;
                         string[] datos_cat = linea_cat.Split(';');
-                        //omitimos los encabezados usando
-                        if (datos_cat[0].Trim().ToLower() == "Codigo") continue;
-                        //como queremos ver los cosigos de las cuentas nos saltamos la fecha
-                        // CORREGIDO: Se usa Equals para comparar de forma segura ignorando diferencias menores
+                        if (es_encabezado(linea_cat)) continue;
                         if (datos_cat.Length >= 2 && datos_cat[0].Trim().Equals(codigo_str, StringComparison.OrdinalIgnoreCase))
                         {
-                            //le reasignamos el valor si la cuenta fue encontrada
                             cuenta_encontrada = true;
-                            //el valor del codigo sera el del codgio
                             string codigo_cat = datos_cat[0].Trim();
-                            //y el nombre tambien
                             string nombre_cat = datos_cat[1].Trim();
-                            //la razon para ponerlos como cadena fue para hacer mas facil esta lectura y suma del codigo y la cuenta afectada
                             cuenta_formateada_para_csv = $"{codigo_cat}-{nombre_cat}";
                             break;
                         }
@@ -387,32 +349,29 @@ while (continuar)
                     }
                     else
                     {
-                        Console.WriteLine($"Código sin existencia {codigo_str} ");
+                        Console.WriteLine($"Codigo sin existencia {codigo_str} ");
                     }
                 }
-                // vamos a pedir donde se resgitran los montos para validar que sean iguales
                 string monto_debe_str = "0";
                 string monto_haber_str = "0";
-                double monto_actual = 0;
+                decimal monto_actual = 0;
                 while (true)
                 {
-                    // le pedimos al usuario que indique en que parte del codogo se va a sumar
                     Console.WriteLine("En donde se registra este movimiento?");
                     Console.WriteLine("1 Debe / 2 Haber");
                     int opcion_debe_haber = pedir_opcion_1_2();
-                    //le pedimmos que ingrese la cantidad permitiendo decimales con tryParse
                     Console.Write("Ingrese la cantidad: ");
                     string cantidad_ingresada_por_el_usuario = Console.ReadLine()?.Trim() ?? "";
-                    if (double.TryParse(cantidad_ingresada_por_el_usuario, out monto_actual) && monto_actual >= 0)
+                    if (decimal.TryParse(cantidad_ingresada_por_el_usuario, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out monto_actual) && monto_actual >= 0)
                     {
                         if (opcion_debe_haber == 1)
                         {
-                            monto_debe_str = monto_actual.ToString("0.00");
+                            monto_debe_str = monto_actual.ToString("0.00", CultureInfo.InvariantCulture);
                             suma_debe += monto_actual;
                         }
                         else
                         {
-                            monto_haber_str = monto_actual.ToString("0.00");
+                            monto_haber_str = monto_actual.ToString("0.00", CultureInfo.InvariantCulture);
                             suma_haber += monto_actual;
                         }
                         break;
@@ -422,14 +381,11 @@ while (continuar)
                         Console.WriteLine("Cantidad invalida, Intente de nuevo");
                     }
                 }
-                //le pedimos al usuario el contexto de lo que hara con esa cuenta
                 Console.WriteLine("Le pedimos el contexto del movimiento al usuario");
                 string concepto_del_movimiento = Console.ReadLine() ?? "";
-                // Construimos la línea con el formato exacto de tu CSV
-                string nueva_linea_mov = $"{fecha_del_movimiento};{cuenta_formateada_para_csv};{monto_debe_str};{monto_haber_str};{concepto_del_movimiento}";
-                //y la agregamos con este metodo
+                concepto_del_movimiento = concepto_del_movimiento.Replace(";", ",").Trim();
+                string nueva_linea_mov = $"{fecha_del_movimiento};{cuenta_formateada_para_csv};{numero_de_asiento_nuevo};{monto_debe_str};{monto_haber_str};{concepto_del_movimiento}";
                 lineas_temporales_movimiento.Add(nueva_linea_mov);
-                //le pedimos que si quiere agregar otro movimiento en este asiento
                 Console.WriteLine("Desea agregar otra cuenta a este registro");
                 Console.WriteLine("1. si | 2. no");
                 int continuar_agregando = pedir_opcion_1_2();
@@ -439,13 +395,10 @@ while (continuar)
                 }
             }
 
-            //validamos que el debe y haber sean iguales como ultimo acto de amor
             Console.WriteLine("");
             Console.WriteLine("RESUMEN DEL REGISTRO");
-            //le mostramos los datos sl usuario 
             Console.WriteLine($"Total Debe:  {suma_debe:0.00}");
             Console.WriteLine($"Total Haber: {suma_haber:0.00}");
-            //en caso el debe y el haber sean iguales y mayores a cero por que no pueden ser negativos se registra el movimiento exitosamenre por medio del File.AppendAllText
             if (suma_debe == suma_haber && suma_debe > 0)
             {
                 foreach (string linea_final in lineas_temporales_movimiento)
@@ -461,25 +414,25 @@ while (continuar)
             break;
 
 
-        case 3: // Lógica del switch número 3: consultar catálogo de cuentas
+        case 3: // Logica del switch numero 3: consultar catalogo de cuentas
             Console.WriteLine();
-            Console.WriteLine("CATÁLOGO DE LAS CUENTAS");
+            Console.WriteLine("CATALOGO DE LAS CUENTAS");
             Console.WriteLine();
 
             if (!File.Exists(ruta_del_catalogo_de_cuentas))
             {
-                Console.WriteLine($"No se encontró el archivo de las cuentas: {ruta_del_catalogo_de_cuentas}");
+                Console.WriteLine($"No se encontro el archivo de las cuentas: {ruta_del_catalogo_de_cuentas}");
                 break;
             }
 
             string[] lineas_catalogo_s3 = File.ReadAllLines(ruta_del_catalogo_de_cuentas);
             if (lineas_catalogo_s3.Length == 0)
             {
-                Console.WriteLine("El archivo se encuentra vacío.");
+                Console.WriteLine("El archivo se encuentra vacio.");
                 break;
             }
 
-            Console.WriteLine($"{"Código",-10} | {"Cuenta",-40} | {"Tipo",-12} | {"Naturaleza",-12}");
+            Console.WriteLine($"{"Codigo",-10} | {"Cuenta",-40} | {"Tipo",-12} | {"Naturaleza",-12}");
             Console.WriteLine(new string('-', 78));
 
             bool primera_linea_s3 = true;
@@ -487,7 +440,7 @@ while (continuar)
             {
                 if (string.IsNullOrWhiteSpace(fila)) continue;
 
-                if (primera_linea_s3 && (fila.ToLower().StartsWith("código") || fila.ToLower().StartsWith("codigo")))
+                if (primera_linea_s3 && es_encabezado(fila))
                 {
                     primera_linea_s3 = false;
                     continue;
@@ -505,7 +458,7 @@ while (continuar)
                 }
                 else
                 {
-                    Console.WriteLine("La línea se encuentra incompleta, revísala.");
+                    Console.WriteLine("La linea se encuentra incompleta, revisala.");
                 }
             }
             break;
@@ -514,14 +467,14 @@ while (continuar)
             Console.WriteLine("MOSTRANDO LOS MOVIMIENTOS CONTABLES");
             if (!File.Exists(ruta_de_los_movimientos_contables))
             {
-                Console.WriteLine($"No se encontró el archivo de movimientos en la ruta: {ruta_de_los_movimientos_contables}");
+                Console.WriteLine($"No se encontro el archivo de movimientos en la ruta: {ruta_de_los_movimientos_contables}");
                 break;
             }
 
             string[] lineas_csv_movimientos = File.ReadAllLines(ruta_de_los_movimientos_contables);
             if (lineas_csv_movimientos.Length == 0)
             {
-                Console.WriteLine("Los movimientos están vacíos.");
+                Console.WriteLine("Los movimientos estan vacios.");
                 break;
             }
 
@@ -533,7 +486,7 @@ while (continuar)
             {
                 if (string.IsNullOrWhiteSpace(lineas)) continue;
 
-                if (primera_linea4 && lineas.ToLower().StartsWith("fecha"))
+                if (primera_linea4 && es_encabezado(lineas))
                 {
                     primera_linea4 = false;
                     continue;
@@ -542,7 +495,6 @@ while (continuar)
                 string[] datos = lineas.Split(';');
                 if (datos.Length >= 6)
                 {
-                    // Variables correctamente mapeadas a las 6 columnas del CSV
                     string fecha = datos[0].Trim();
                     string cuenta = datos[1].Trim();
                     string asiento = datos[2].Trim();
@@ -554,7 +506,7 @@ while (continuar)
                 }
                 else
                 {
-                    Console.WriteLine($"[Línea incompleta]: {lineas}");
+                    Console.WriteLine($"[Linea incompleta]: {lineas}");
                 }
             }
             break;
@@ -572,7 +524,6 @@ while (continuar)
         break;
     }
 
-    // carga el catalogo de manera dinamica mapeando el codigo y el nombre a su tipo correspondiente
     var catalogoResultados = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     foreach (string linea in File.ReadLines(ruta_del_catalogo_de_cuentas, Encoding.UTF8))
@@ -582,60 +533,35 @@ while (continuar)
         if (datos.Length < 3) continue;
 
         string codigo = datos[0].Trim();
-        string nombre = datos[1].Trim();
         string tipo = datos[2].Trim().ToLower();
 
-        // filtramos las cuentas obligatorias ppara el estado de resultados
         if (tipo == "ingreso" || tipo == "costo" || tipo == "gasto")
         {
             catalogoResultados[codigo] = tipo;
-            catalogoResultados[nombre] = tipo;
         }
     }
 
     var ingresos = new Dictionary<string, decimal>();
     var costos = new Dictionary<string, decimal>();
     var gastos = new Dictionary<string, decimal>();
-    int movimientos_sin_catalogo = 0;
 
-    // busca en todos los movements limpiando los formatos y aumulando saldos
     foreach (string linea in File.ReadLines(ruta_de_los_movimientos_contables, Encoding.UTF8))
     {
         if (string.IsNullOrWhiteSpace(linea)) continue;
-        if (linea.ToLower().Contains("fecha") || linea.StartsWith(";")) continue;
+        if (es_encabezado(linea) || linea.StartsWith(";")) continue;
 
         string[] datos = linea.Split(';');
-        if (datos.Length < 5) continue;
+        if (datos.Length < 6) continue;
 
         string cuentaMov = datos[1].Trim();
-        
-        // ignoramos llos puntos para obtener bien los montos 
-        string debeStr = datos[2].Trim().Replace(".", "").Replace(",", ".");
-        string haberStr = datos[3].Trim().Replace(".", "").Replace(",", ".");
+        decimal debe = convertir_monto(datos[3]);
+        decimal haber = convertir_monto(datos[4]);
 
-        decimal.TryParse(debeStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal debe);
-        decimal.TryParse(haberStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal haber);
-
-        // loocking for a que tipo pertenece la cuenta del movimiento
-        string tipoEncontrado = "";
+        string tipoEncontrado = buscar_tipo_de_cuenta(cuentaMov, catalogoResultados);
         string nombreCuentaLimpio = cuentaMov;
 
-        foreach (var kvp in catalogoResultados)
-        {
-            if (cuentaMov.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
-            {
-                tipoEncontrado = kvp.Value;
-                break;
-            }
-        }
+        if (string.IsNullOrEmpty(tipoEncontrado)) continue;
 
-        if (string.IsNullOrEmpty(tipoEncontrado))
-        {
-            // ignoramos los movimientos que  no pertenecen a ingresos,costos y gastos
-            continue;
-        }
-
-        // clasificamos segun naturaleza contable
         if (tipoEncontrado == "ingreso")
         {
             ingresos[nombreCuentaLimpio] = ingresos.GetValueOrDefault(nombreCuentaLimpio) + (haber - debe);
@@ -650,7 +576,6 @@ while (continuar)
         }
     }
 
-    // imprime el estado de resultados
     Console.WriteLine(new string('=', 62));
     Console.WriteLine($"{"ESTADO DE RESULTADOS",41}");
     Console.WriteLine(new string('=', 62));
@@ -688,7 +613,6 @@ while (continuar)
         break;
     }
 
-    // carga el catalogo para poder clacificar las cuentas por su tipo
     var catalogoBalance = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     foreach (string linea in File.ReadLines(ruta_del_catalogo_de_cuentas, Encoding.UTF8))
@@ -698,13 +622,11 @@ while (continuar)
         if (datos.Length < 3) continue;
 
         string codigo = datos[0].Trim();
-        string nombre = datos[1].Trim();
         string tipo = datos[2].Trim().ToLower();
 
         if (tipo == "activo" || tipo == "pasivo" || tipo == "patrimonio" || tipo == "capital")
         {
             catalogoBalance[codigo] = tipo;
-            catalogoBalance[nombre] = tipo;
         }
     }
 
@@ -712,40 +634,22 @@ while (continuar)
     var pasivos = new Dictionary<string, decimal>();
     var patrimonio = new Dictionary<string, decimal>();
 
-    // recorre los movimiento limpiando formatos y acumulando lo saldos
     foreach (string linea in File.ReadLines(ruta_de_los_movimientos_contables, Encoding.UTF8))
     {
         if (string.IsNullOrWhiteSpace(linea)) continue;
-        if (linea.ToLower().Contains("fecha") || linea.StartsWith(";")) continue;
+        if (es_encabezado(linea) || linea.StartsWith(";")) continue;
 
         string[] datos = linea.Split(';');
-        if (datos.Length < 5) continue;
+        if (datos.Length < 6) continue;
 
         string cuentaMov = datos[1].Trim();
-        
-        // ignoramos llos puntos para obtener bien los montos 
-        string debeStr = datos[2].Trim().Replace(".", "").Replace(",", ".");
-        string haberStr = datos[3].Trim().Replace(".", "").Replace(",", ".");
+        decimal debe = convertir_monto(datos[3]);
+        decimal haber = convertir_monto(datos[4]);
 
-        decimal.TryParse(debeStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal debe);
-        decimal.TryParse(haberStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal haber);
-
-        string tipoEncontrado = "";
-        foreach (var kvp in catalogoBalance)
-        {
-            if (cuentaMov.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
-            {
-                tipoEncontrado = kvp.Value;
-                break;
-            }
-        }
+        string tipoEncontrado = buscar_tipo_de_cuenta(cuentaMov, catalogoBalance);
 
         if (string.IsNullOrEmpty(tipoEncontrado)) continue;
 
-        // naturaleza de las cuentas de balance:
-        // activo: naturaleza deudora (debe/haber)
-        // pasivo y patrimonio: naturaleza acreedora (haber/debe)
-        
         if (tipoEncontrado == "activo")
         {
             activos[cuentaMov] = activos.GetValueOrDefault(cuentaMov) + (debe - haber);
@@ -760,9 +664,6 @@ while (continuar)
         }
     }
 
-      //hacemos tremenda obra de arte usando lo mismo del caso 7 para pioder
-      //calcular y saber si se resta o suma recorriendo todos los archivos 
-  
     var catalogoResultados = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     foreach (string linea in File.ReadLines(ruta_del_catalogo_de_cuentas, Encoding.UTF8))
     {
@@ -770,33 +671,25 @@ while (continuar)
         string[] datos = linea.Split(';');
         if (datos.Length < 3) continue;
         catalogoResultados[datos[0].Trim()] = datos[2].Trim().ToLower();
-        catalogoResultados[datos[1].Trim()] = datos[2].Trim().ToLower();
     }
 
     decimal totalIngresos = 0, totalCostos = 0, totalGastos = 0;
     foreach (string linea in File.ReadLines(ruta_de_los_movimientos_contables, Encoding.UTF8))
     {
-        if (string.IsNullOrWhiteSpace(linea) || linea.ToLower().Contains("fecha") || linea.StartsWith(";")) continue;
+        if (string.IsNullOrWhiteSpace(linea) || es_encabezado(linea) || linea.StartsWith(";")) continue;
         string[] datos = linea.Split(';');
-        if (datos.Length < 5) continue;
+        if (datos.Length < 6) continue;
         string cuentaMov = datos[1].Trim();
-        decimal.TryParse(datos[2].Trim().Replace(".", "").Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out decimal debe);
-        decimal.TryParse(datos[3].Trim().Replace(".", "").Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out decimal haber);
+        decimal debe = convertir_monto(datos[3]);
+        decimal haber = convertir_monto(datos[4]);
 
-        foreach (var kvp in catalogoResultados)
-        {
-            if (cuentaMov.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
-            {
-                if (kvp.Value == "ingreso") totalIngresos += (haber - debe);
-                else if (kvp.Value == "costo") totalCostos += (debe - haber);
-                else if (kvp.Value == "gasto") totalGastos += (debe - haber);
-                break;
-            }
-        }
+        string tipo_de_la_cuenta_mov = buscar_tipo_de_cuenta(cuentaMov, catalogoResultados);
+        if (tipo_de_la_cuenta_mov == "ingreso") totalIngresos += (haber - debe);
+        else if (tipo_de_la_cuenta_mov == "costo") totalCostos += (debe - haber);
+        else if (tipo_de_la_cuenta_mov == "gasto") totalGastos += (debe - haber);
     }
     decimal utilidadNetaPeriodo = totalIngresos - (totalCostos + totalGastos);
 
-    // imprimimos el estado de situacion financiera
     Console.WriteLine();
     Console.WriteLine("--- ACTIVOS ---");
     decimal totalActivos = 0;
@@ -827,7 +720,6 @@ while (continuar)
         Console.WriteLine($"   {c.Key,-43}{c.Value,14:N2}");
         totalPatrimonioBase += c.Value;
     }
-    // incluyo la uti del periodo dentro del patri final
     Console.WriteLine($"   {"Utilidad / Perdida del Periodo",-43}{utilidadNetaPeriodo,14:N2}");
     
     decimal totalPatrimonioFinal = totalPatrimonioBase + utilidadNetaPeriodo;
@@ -867,7 +759,6 @@ while (continuar)
     var catalogoPatrimonio = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     var catalogoGeneral = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-    // lee los catalogos de cuentas para tener el patrimonio de manera correcta
     foreach (string linea in File.ReadLines(ruta_del_catalogo_de_cuentas, Encoding.UTF8))
     {
         if (string.IsNullOrWhiteSpace(linea)) continue;
@@ -879,12 +770,10 @@ while (continuar)
         string tipo = datos[2].Trim();
 
         catalogoGeneral[codigo] = tipo;
-        catalogoGeneral[nombre] = tipo;
 
         if (tipo.Equals("capital", StringComparison.OrdinalIgnoreCase) || tipo.Equals("patrimonio", StringComparison.OrdinalIgnoreCase))
         {
             catalogoPatrimonio[codigo] = nombre;
-            catalogoPatrimonio[nombre] = nombre;
         }
     }
 
@@ -895,39 +784,27 @@ while (continuar)
     decimal totalCostos = 0;
     decimal totalGastos = 0;
 
-    // lee los movimientos contables en busca de las modificaciones 
     foreach (string linea in File.ReadLines(ruta_de_los_movimientos_contables, Encoding.UTF8))
     {
         if (string.IsNullOrWhiteSpace(linea)) continue;
-        if (linea.ToLower().Contains("fecha") || linea.StartsWith(";")) continue;
+        if (es_encabezado(linea) || linea.StartsWith(";")) continue;
 
         string[] datos = linea.Split(';');
-        if (datos.Length < 5) continue;
+        if (datos.Length < 6) continue;
 
         string cuentaMov = datos[1].Trim();
-        string codigoBusqueda = cuentaMov.Contains("-") ? cuentaMov.Split('-')[0].Trim() : cuentaMov;
+        decimal debe = convertir_monto(datos[3]);
+        decimal haber = convertir_monto(datos[4]);
 
-        // elimina los puntos a la hora de recorrer los archivos para una lectuura clara de los montos 
-        string debeStr = datos[2].Trim().Replace(".", "").Replace(",", ".");
-        string haberStr = datos[3].Trim().Replace(".", "").Replace(",", ".");
-
-        decimal.TryParse(debeStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal debe);
-        decimal.TryParse(haberStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal haber);
-
-        // se evaluan los aportes y los retiros para sacar el patrimoniio
         bool esPatrimonio = false;
-        foreach (var key in catalogoPatrimonio.Keys)
+        if (buscar_codigo_de_cuenta(cuentaMov, catalogoPatrimonio) != "")
         {
-            if (cuentaMov.Contains(key, StringComparison.OrdinalIgnoreCase))
-            {
-                esPatrimonio = true;
-                break;
-            }
+            esPatrimonio = true;
         }
 
         if (esPatrimonio)
         {
-            string concepto = datos[4].Trim().ToLower();
+            string concepto = datos[5].Trim().ToLower();
             if (concepto.Contains("retiro") || concepto.Contains("dividendo"))
             {
                 retiros += (debe - haber);
@@ -938,21 +815,13 @@ while (continuar)
             }
         }
 
-        // evaluamos los resultados para la utilidad neta 
-        foreach (var kvp in catalogoGeneral)
-        {
-            if (cuentaMov.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
-            {
-                string tipoCuenta = kvp.Value;
-                if (tipoCuenta.Equals("ingreso", StringComparison.OrdinalIgnoreCase))
-                    totalIngresos += (haber - debe);
-                else if (tipoCuenta.Equals("costo", StringComparison.OrdinalIgnoreCase))
-                    totalCostos += (debe - haber);
-                else if (tipoCuenta.Equals("gasto", StringComparison.OrdinalIgnoreCase))
-                    totalGastos += (debe - haber);
-                break;
-            }
-        }
+        string tipoCuenta = buscar_tipo_de_cuenta(cuentaMov, catalogoGeneral);
+        if (tipoCuenta.Equals("ingreso", StringComparison.OrdinalIgnoreCase))
+            totalIngresos += (haber - debe);
+        else if (tipoCuenta.Equals("costo", StringComparison.OrdinalIgnoreCase))
+            totalCostos += (debe - haber);
+        else if (tipoCuenta.Equals("gasto", StringComparison.OrdinalIgnoreCase))
+            totalGastos += (debe - haber);
     }
 
     decimal utilidadFinalCalculada = totalIngresos - (totalCostos + totalGastos);
@@ -984,43 +853,33 @@ while (continuar)
     decimal flujoOperativo = 0;
     decimal flujoInversion = 0;
     decimal flujoFinanciamiento = 0;
-
-    //  busamos las transacciones que afectan el efectivo recorriendo los movimientos
     
     foreach (string linea in File.ReadLines(ruta_de_los_movimientos_contables, Encoding.UTF8))
     {
         if (string.IsNullOrWhiteSpace(linea)) continue;
-        if (linea.ToLower().Contains("fecha") || linea.StartsWith(";")) continue;
+        if (es_encabezado(linea) || linea.StartsWith(";")) continue;
 
         string[] datos = linea.Split(';');
-        if (datos.Length < 5) continue;
+        if (datos.Length < 6) continue;
 
         string cuentaMov = datos[1].Trim();
-        string concepto = datos[4].Trim().ToLower();
+        string concepto = datos[5].Trim().ToLower();
 
-        // definir si la cuenta es de efectivo o bancco
         bool esEfectivo = cuentaMov.Contains("1101") || cuentaMov.Contains("1102") || 
                           cuentaMov.Contains("caja", StringComparison.OrdinalIgnoreCase) || 
                           cuentaMov.Contains("banco", StringComparison.OrdinalIgnoreCase);
 
         if (!esEfectivo) continue;
 
-        // ignoramos llos puntos para obtener bien los montos 
-        string debeStr = datos[2].Trim().Replace(".", "").Replace(",", ".");
-        string haberStr = datos[3].Trim().Replace(".", "").Replace(",", ".");
-
-        decimal.TryParse(debeStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal debe);
-        decimal.TryParse(haberStr, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal haber);
-
-        // si el efect entra debe y es positivo si no es negativo y haber
+        decimal debe = convertir_monto(datos[3]);
+        decimal haber = convertir_monto(datos[4]);
         decimal cambioEfectivo = debe - haber;
 
-        //  clasifica segun palabras claves de los conceptps de las transacciones
-        if (concepto.Contains("aporte") || concepto.Contains("capital") || concepto.Contains("prestamo") || concepto.Contains("financiamiento") || concepto.Contains("socio"))
+        if (concepto.Contains("aporte") || concepto.Contains("aportacion") || concepto.Contains("capital") || concepto.Contains("prestamo") || concepto.Contains("financiamiento") || concepto.Contains("socio"))
         {
             flujoFinanciamiento += cambioEfectivo;
         }
-        else if (concepto.Contains("equipo") || concepto.Contains("mobiliario") || concepto.Contains("vehiculo") || concepto.Contains("maquinaria") || concepto.Contains("activo"))
+        else if (concepto.Contains("equipo") || concepto.Contains("mobiliario") || concepto.Contains("vehiculo") || concepto.Contains("maquinaria") || concepto.Contains("activo") || concepto.Contains("enganche") || concepto.Contains("compra de licencias"))
         {
             flujoInversion += cambioEfectivo;
         }
@@ -1032,7 +891,6 @@ while (continuar)
 
     decimal flujoNetoTotal = flujoOperativo + flujoInversion + flujoFinanciamiento;
 
-    // imprimimos reporte
     Console.WriteLine($"{"1. Actividades de Operacion:",-42} {flujoOperativo,15:N2}");
     Console.WriteLine($"{"2. Actividades de Inversion:",-42} {flujoInversion,15:N2}");
     Console.WriteLine($"{"3. Actividades de Financiamiento:",-42} {flujoFinanciamiento,15:N2}");
@@ -1044,16 +902,11 @@ while (continuar)
 
     case 9:
         Console.WriteLine("Saliendo del programa. Tenga un buen dia.");
-        continuar = false; // Rompe el ciclo while
+        continuar = false;
         break;
-
-
     }
 }
 
-
-
-//====00 metodos cabron para todos mantengan esta mierda leible y ordenada para que no haya problemas a futuro----NOP
 void MostrarMenu()
 {
     Console.WriteLine();
@@ -1062,34 +915,34 @@ void MostrarMenu()
     Console.WriteLine("===============================");
     Console.WriteLine();
     Console.WriteLine("Por favor elige la opcion que desees realizar");
-    Console.WriteLine("1. Administrar catálogo de cuentas ");
+    Console.WriteLine("1. Administrar catalogo de cuentas ");
     Console.WriteLine("2. Registrar movimiento contable ");
-    Console.WriteLine("3. Consultar catálogo de cuentas ");
+    Console.WriteLine("3. Consultar catalogo de cuentas ");
     Console.WriteLine("4. Consultar movimientos ");
     Console.WriteLine("5. Estado de Resultados ");
-    Console.WriteLine("6. Estado de Situación Financiera ");
+    Console.WriteLine("6. Estado de Situacion Financiera ");
     Console.WriteLine("7. Estado de Cambios en el Patrimonio ");
     Console.WriteLine("8. Estado de Flujos de Efectivo ");
     Console.WriteLine("9. Salir ");
     Console.WriteLine();
 }
 
+// CORREGIDO: Se valida que la opción no tenga signos (+ o -) para evitar entradas como "+8"
 int PedirOpcion()
 {
     while (true)
     {
         Console.Write("Seleccione una opcion: ");
-        string entrada = Console.ReadLine() ?? "";
+        string entrada = Console.ReadLine()?.Trim() ?? "";
 
-        if (int.TryParse(entrada, out int opcion))
+        if (!string.IsNullOrEmpty(entrada) && entrada.All(char.IsDigit))
         {
-
-            if (opcion >= 1 && opcion <= 9)
+            if (int.TryParse(entrada, out int opcion) && opcion >= 1 && opcion <= 9)
             {
                 return opcion;
             }
         }
-        Console.WriteLine("La opcion seleccionada es invalida, Intente de nuevo con una opción entre el 1 y el 9");
+        Console.WriteLine("La opcion seleccionada es invalida, Intente de nuevo con una opcion entre el 1 y el 9");
     }
 }
 
@@ -1098,12 +951,11 @@ int pedir_opcion1_1()
     while (true)
     {
         Console.Write("Seleccione una opcion: ");
-        string entrada = Console.ReadLine() ?? "";
+        string entrada = Console.ReadLine()?.Trim() ?? "";
 
-        if (int.TryParse(entrada, out int opcion))
+        if (!string.IsNullOrEmpty(entrada) && entrada.All(char.IsDigit))
         {
-
-            if (opcion >= 1 && opcion <= 6)
+            if (int.TryParse(entrada, out int opcion) && opcion >= 1 && opcion <= 6)
             {
                 return opcion;
             }
@@ -1117,12 +969,11 @@ int pedir_opcion_switch_uno()
     while (true)
     {
         Console.Write("Seleccione una opcion: ");
-        string entrada = Console.ReadLine() ?? "";
+        string entrada = Console.ReadLine()?.Trim() ?? "";
 
-        if (int.TryParse(entrada, out int opcion))
+        if (!string.IsNullOrEmpty(entrada) && entrada.All(char.IsDigit))
         {
-
-            if (opcion >= 1 && opcion <= 4)
+            if (int.TryParse(entrada, out int opcion) && opcion >= 1 && opcion <= 4)
             {
                 return opcion;
             }
@@ -1136,12 +987,11 @@ int pedir_numero()
     while (true)
     {
         Console.Write("");
-        string entrada = Console.ReadLine() ?? "";
+        string entrada = Console.ReadLine()?.Trim() ?? "";
 
-        if (int.TryParse(entrada, out int opcion))
+        if (!string.IsNullOrEmpty(entrada) && entrada.All(char.IsDigit))
         {
-
-            if (opcion >= 0)
+            if (int.TryParse(entrada, out int opcion) && opcion >= 0)
             {
                 return opcion;
             }
@@ -1155,12 +1005,11 @@ int pedir_opcion_1_2()
     while (true)
     {
         Console.Write("Seleccione una opcion: ");
-        string entrada = Console.ReadLine() ?? "";
+        string entrada = Console.ReadLine()?.Trim() ?? "";
 
-        if (int.TryParse(entrada, out int opcion))
+        if (!string.IsNullOrEmpty(entrada) && entrada.All(char.IsDigit))
         {
-
-            if (opcion >= 1 && opcion <= 2)
+            if (int.TryParse(entrada, out int opcion) && opcion >= 1 && opcion <= 2)
             {
                 return opcion;
             }
@@ -1171,51 +1020,37 @@ int pedir_opcion_1_2()
 
 string pedir_nombre_cuenta(string ruta_catalogo)
 {
-    //mientras el nombre sea invalido el ciclo se repetira hasta el name sea valida
     while (true)
     {
-        //primero pedimos el nombre de la cuenta el metodo ToTrim se salta los espacios en blanco
         string nombre = Console.ReadLine()?.Trim() ?? "";
 
-        //si el usuario no ingresa ningun valor se activa el metodo IsNullOrWhiteSpace donde le indicariamos al usuario que el nombre no puede estar en blano
-        if (string.IsNullOrWhiteSpace(nombre) || nombre.Any(char.IsDigit))
+        if (string.IsNullOrWhiteSpace(nombre) || nombre.Contains(";"))
         {
-            Console.WriteLine("El nombre de la cuenta no puede estar vacio, ni contener numeros");
+            Console.WriteLine("El nombre de la cuenta no puede estar vacio, ni contener punto y coma (;)");
             continue;
         }
 
-        //por medio de la varibale existe nos aseguraremos que el nombre no se haya introducido antes
         bool existe = false;
-
-        //esta matriz esta para ser capaz de leeer todas las filas del codigo por medio del foreach
         string[] lineas = File.ReadAllLines(ruta_catalogo);
 
         foreach (string linea in lineas)
         {
-            //si el espacio esta vacio se lo salta
             if (string.IsNullOrWhiteSpace(linea))
                 continue;
 
-            //los ; estan como saltos entre los cuadrados
             string[] datos = linea.Split(';');
 
-            //para leer las cuentas del csv debe acceder a los nombres pero antes de eso van los codigos por eso ocupamos esta validacion que se salta datos[0] la cual contiene los codes a los cuales no queremos llegar en esta iteracion si no que iremos de una sola vez a las cuentas
             if (datos.Length > 1)
             {
-                //leemos que la cuenta no se encuentre dentro de las matriz que almacena las cuentas
                 string cuenta_existente = datos[1].Trim();
-
-                //y volvemos asar el metodo ToLower para validar mas facil mente
                 if (cuenta_existente.ToLower() == nombre.ToLower())
                 {
-                    //si no existe se le cambia el tipo a existe y salimos del metodo caso contrario pasa al otro if
                     existe = true;
                     break;
                 }
             }
         }
 
-        // como la cuenta si existe se le muestra al usuario este mensaje indicando que la cuenta ya existe y debe volver a ingresar otro nombre
         if (existe)
         {
             Console.WriteLine($"La cuenta '{nombre}' ya existe en el catalogo");
@@ -1229,25 +1064,21 @@ void mostrar_menu1()
 {
     Console.WriteLine();
     Console.WriteLine("=================================");
-    Console.WriteLine(" ADMINISTRAR CATÁLOGO DE CUENTAS");
+    Console.WriteLine(" ADMINISTRAR CATALOGO DE CUENTAS");
     Console.WriteLine("=================================");
-    Console.WriteLine("1. Ver catálogo de cuentas");
+    Console.WriteLine("1. Ver catalogo de cuentas");
     Console.WriteLine("2. Agregar nueva cuenta");
     Console.WriteLine("3. Eliminar una cuenta");
-    Console.WriteLine("4. Volver al menú principal");
-    Console.Write("Indique la acción que desea realizar");
+    Console.WriteLine("4. Volver al menu principal");
+    Console.Write("Indique la accion que desea realizar: ");
     Console.WriteLine();
-
 }
 
-//!!!!!!!!comentar esta mierda con urgencia extrema, duilio en el menu no crea que sea muy necesario comentarlo o bueno tal vez
 string pedir_fecha()
 {
-    //repetimos el metodo hasta que el usuario meta una fecha valida
     while (true)
     {
         string entrada = Console.ReadLine() ?? "";
-        //si esta vacia se lo hacemos saber al usuario por medio de una validacion
         if (string.IsNullOrWhiteSpace(entrada))
         {
             Console.WriteLine("La fecha no puede quedar vacia ");
@@ -1255,14 +1086,14 @@ string pedir_fecha()
         }
         try
         {
-            if (DateTime.TryParseExact(entrada, "yyyy-MM-dd",
-    System.Globalization.CultureInfo.InvariantCulture,
-    System.Globalization.DateTimeStyles.None,
-    out DateTime fecha_valida))
+            if (DateTime.TryParseExact(entrada, "dd/MM/yyyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out DateTime fecha_valida))
             {
-                if (fecha_valida.Year >= 2000 && fecha_valida.Year <= 2026)
+                if (fecha_valida.Year >= 2000 && fecha_valida.Year <= DateTime.Now.Year)
                 {
-                    return fecha_valida.ToString("yyyy-MM-dd");
+                    return fecha_valida.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -1271,10 +1102,10 @@ string pedir_fecha()
             }
             else
             {
-                Console.WriteLine("Formato invalido de fecha por favor intentelo con el formato yyyy-mm-dd");
+                Console.WriteLine("Formato invalido de fecha por favor intentelo con el formato dd/mm/yyyy");
             }
         }
-        catch (Exception )
+        catch (Exception)
         {
             Console.WriteLine("Se ha ocasionado un ERROR");
         }
@@ -1288,9 +1119,14 @@ string pedir_codigo_texto()
         string entrada = Console.ReadLine()?.Trim() ?? "";
         if (!string.IsNullOrWhiteSpace(entrada))
         {
+            if (entrada.Contains(";"))
+            {
+                Console.WriteLine("El codigo no puede llevar punto y coma (;). Intente de nuevo.");
+                continue;
+            }
             return entrada;
         }
-        Console.WriteLine("El código no puede estar vacío. Intente de nuevo.");
+        Console.WriteLine("El codigo no puede estar vacio. Intente de nuevo.");
     }
 }
 
@@ -1310,4 +1146,119 @@ static decimal imprimir_seccion(string titulo, Dictionary<string, decimal> cuent
 
     Console.WriteLine($"{"Total " + titulo.Replace("(-) ", "").ToLower(),-46}{total,14:N2}");
     return total;
+}
+
+string quitar_acentos(string texto)
+{
+    string normalizado = texto.Normalize(NormalizationForm.FormD);
+    StringBuilder resultado = new StringBuilder();
+    foreach (char letra in normalizado)
+    {
+        if (CharUnicodeInfo.GetUnicodeCategory(letra) != UnicodeCategory.NonSpacingMark)
+        {
+            resultado.Append(letra);
+        }
+    }
+    return resultado.ToString().Normalize(NormalizationForm.FormC);
+}
+
+bool es_encabezado(string linea)
+{
+    string limpia = quitar_acentos(linea).Trim().TrimStart('\uFEFF').ToLower();
+    return limpia.StartsWith("codigo") || limpia.StartsWith("fecha");
+}
+
+// CORREGIDO: Conversión inteligente de montos para manejar formatos con miles o decimales sin recortar ceros
+decimal convertir_monto(string texto)
+{
+    string s = texto.Trim().Replace(" ", "");
+    if (string.IsNullOrEmpty(s)) return 0m;
+
+    if (s.Contains(',') && s.Contains('.'))
+    {
+        if (s.LastIndexOf('.') > s.LastIndexOf(','))
+            s = s.Replace(",", "");
+        else
+            s = s.Replace(".", "").Replace(",", ".");
+    }
+    else if (s.Contains(','))
+    {
+        string[] partes = s.Split(',');
+        if (partes.Length == 2 && (partes[1].Length == 1 || partes[1].Length == 2))
+            s = s.Replace(",", ".");
+        else
+            s = s.Replace(",", "");
+    }
+    else if (s.Contains('.'))
+    {
+        string[] partes = s.Split('.');
+        if (partes.Length == 2 && partes[1].Length == 3 && partes[0] != "0" && partes[0] != "")
+            s = s.Replace(".", "");
+    }
+
+    if (decimal.TryParse(s, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out decimal resultado))
+    {
+        return resultado;
+    }
+    return 0m;
+}
+
+string buscar_codigo_de_cuenta(string cuenta_mov, Dictionary<string, string> catalogo)
+{
+    foreach (string codigo_cat in catalogo.Keys.OrderByDescending(k => k.Length))
+    {
+        if (cuenta_mov.Equals(codigo_cat, StringComparison.OrdinalIgnoreCase) ||
+            cuenta_mov.StartsWith(codigo_cat + "-", StringComparison.OrdinalIgnoreCase))
+        {
+            return codigo_cat;
+        }
+    }
+    return "";
+}
+
+string buscar_tipo_de_cuenta(string cuenta_mov, Dictionary<string, string> catalogo)
+{
+    string codigo_encontrado = buscar_codigo_de_cuenta(cuenta_mov, catalogo);
+    if (codigo_encontrado == "")
+    {
+        return "";
+    }
+    return catalogo[codigo_encontrado];
+}
+
+bool cuenta_tiene_movimientos(string ruta_movimientos, string codigo)
+{
+    if (!File.Exists(ruta_movimientos)) return false;
+
+    foreach (string linea in File.ReadLines(ruta_movimientos))
+    {
+        if (string.IsNullOrWhiteSpace(linea) || es_encabezado(linea)) continue;
+        string[] datos = linea.Split(';');
+        if (datos.Length < 2) continue;
+
+        string cuenta_mov = datos[1].Trim();
+        if (cuenta_mov.Equals(codigo, StringComparison.OrdinalIgnoreCase) ||
+            cuenta_mov.StartsWith(codigo + "-", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+int obtener_siguiente_asiento(string ruta_movimientos)
+{
+    int mayor_asiento = 0;
+    foreach (string linea in File.ReadLines(ruta_movimientos))
+    {
+        if (string.IsNullOrWhiteSpace(linea) || es_encabezado(linea)) continue;
+        string[] datos = linea.Split(';');
+        if (datos.Length < 3) continue;
+
+        if (int.TryParse(datos[2].Trim(), out int numero_asiento) && numero_asiento > mayor_asiento)
+        {
+            mayor_asiento = numero_asiento;
+        }
+    }
+    return mayor_asiento + 1;
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sistema contable")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+40ec494963fc80817e355cfd6a94e02b0c1bc478")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbf3ff5c59609f4e2145a3aa6a6bc36104c15db2")]
 [assembly: System.Reflection.AssemblyProductAttribute("sistema contable")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sistema contable")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

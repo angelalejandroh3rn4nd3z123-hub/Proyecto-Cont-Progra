@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/alejandro/RiderProjects/SistemaContable/sistema contable/sistema contable.csproj",
+      "projectUniqueName": "/home/alejandro/Escritorio/Cont-Program/sistema contable/sistema contable.csproj",
       "projectName": "sistema contable",
-      "projectPath": "/home/alejandro/RiderProjects/SistemaContable/sistema contable/sistema contable.csproj",
+      "projectPath": "/home/alejandro/Escritorio/Cont-Program/sistema contable/sistema contable.csproj",
       "packagesPath": "/home/alejandro/.nuget/packages/",
-      "outputPath": "/home/alejandro/RiderProjects/SistemaContable/sistema contable/obj/",
+      "outputPath": "/home/alejandro/Escritorio/Cont-Program/sistema contable/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/alejandro/.nuget/NuGet/NuGet.Config"

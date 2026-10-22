@@ -1,22 +1,22 @@
-﻿Código;Nombre de Cuenta;Tipo de Cuenta;Naturaleza;
-1101-3;Caja;Activo;Deudora;
-1102-1; Banco;Activo;Deudora;
-1103-1;Clientes;Activo;Deudora;
-1104-2;Renta pagada por anticipado;Activo;Deudora;
-1201-1;Equipo de computo y servidores ;Activo;Deudora;
-1202-1;Activos intangibles (Licencias);Activo;Deudora;
-2101-4;Mobiliario y equipo de oficina;Activo;Deudora;
-2102-5;Equipo de transporte (Minivan);Activo;Deudora;
-2103-8;Proveedores ;Pasivo;Acreedora;
-2104-9;Acreedores Diversos;Pasivo;Acreedora;
-2201-1;Anticipo de clientes;Pasivo;Acreedora;
-3101-3;Impuestos por pagar ;Pasivo;Acreedora;
-3201-1;Documentos por pagar a largo plazo ;Pasivo;Acreedora;
-3301-1;Capital social;Patrimonio;Acreedora;
-4101-1;Aportes Adicionales de capital;Patrimonio;Acreedora;
-4102-2;Ingresos por licencias y software;Ingreso;Acreedora;
-5101-1;Ingresos por servicios de consultoria ;Ingreso;Acreedora;
-5201-1;Costo de servicios TI;Gasto;Deudora;
-5202-4;Gasto por sueldo y salarios ;Gasto;Deudora;
-5202-7;Gasto por renta;Gasto;Deudora;
-5203-5;Gastos por servicios ;Gasto;Deudora;
+﻿Código;Nombre de Cuenta;Tipo de Cuenta;Naturaleza
+1101-3;Caja;Activo;Deudora
+1102-1;Banco;Activo;Deudora
+1103-1;Clientes;Activo;Deudora
+1104-2;Renta pagada por anticipado;Activo;Deudora
+1201-1;Equipo de computo y servidores;Activo;Deudora
+1202-1;Activos intangibles (Licencias);Activo;Deudora
+2101-4;Mobiliario y equipo de oficina;Activo;Deudora
+2102-5;Equipo de transporte (Minivan);Activo;Deudora
+2103-8;Proveedores;Pasivo;Acreedora
+2104-9;Acreedores Diversos;Pasivo;Acreedora
+2201-1;Anticipo de clientes;Pasivo;Acreedora
+3101-3;Impuestos por pagar;Pasivo;Acreedora
+3201-1;Documentos por pagar a largo plazo;Pasivo;Acreedora
+3301-1;Capital social;Patrimonio;Acreedora
+4101-1;Aportes Adicionales de capital;Patrimonio;Acreedora
+4102-2;Ingresos por licencias y software;Ingreso;Acreedora
+5101-1;Ingresos por servicios de consultoria;Ingreso;Acreedora
+5201-1;Costo de servicios TI;Costo;Deudora
+5202-4;Gasto por sueldo y salarios;Gasto;Deudora
+5202-7;Gasto por renta;Gasto;Deudora
+5203-5;Gastos por servicios;Gasto;Deudora
